@@ -29,7 +29,7 @@ object camion {
     }
 
     method cosaConNivelDePeligrosidad(unNivel) {
-        return cosas.find({c=> c.nivelDelPeligrosidad() == unNivel})
+        return cosas.find({c=> c.nivelDePeligrosidad() == unNivel})
     }
 
     method cosasQueSuperanNivelDePeligro(unNivel){
@@ -44,7 +44,7 @@ object camion {
 
     method puedeCircularEnRuta(unNivel) {
         return not self.estaExcedidoDePeso() && 
-        cosas.all({c=> c.nivelDePeligrosisad() < unNivel})
+        cosas.all({c=> c.nivelDePeligrosidad() < unNivel})
         //self.cosasQueSuperanNivelDePeligro(unNivel).isEmpty()
     }
 

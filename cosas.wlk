@@ -20,7 +20,7 @@ object auto {
   
   method nivelDePeligrosidad() = 30
 }
-object moto {
+object robot {
   
   method nivelDePeligrosidad() = 15
 }
@@ -50,6 +50,8 @@ object arenaAGranel {
     method pesoNuevo(unPeso){
         peso = unPeso
     } 
+
+    method peso() = peso
 
     method nivelDePeligrosidad() = 1
 

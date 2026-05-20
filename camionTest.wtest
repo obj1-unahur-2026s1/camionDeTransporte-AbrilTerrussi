@@ -1,9 +1,48 @@
+import cosas.*
 import camion.*
 
 describe "group of test for camion" {
-
-  test "first test" {
-    assert.that(true)
+  method initialize(){
+    bumblebee.cambiarTransformacion(robot)
+    camion.cargarCosas(bumblebee) //800
+    arenaAGranel.pesoNuevo(150) //150
+    camion.cargarCosas(arenaAGranel)
+    camion.cargarCosas(bateriaAntiaerea) //300
+    paqueteDeLadrillos.sumarLadrillos(80) //160
+    embalajeDeSeguridad.cambiarCosaEnvuelta(paqueteDeLadrillos)
+    camion.cargarCosas(embalajeDeSeguridad)
   }
 
+  test "el peso del camion es de 2410" {
+    
+    camion.pesoTotalDeCosas()
+    
+    assert.equals(2410, camion.peso())
+  }
+
+  test "en el camion hay alguna cosa que pese 300"{
+    assert.that(camion.hayCosaDePeso(300))
+  }
+
+  test "la primer cosa con peligrosidad 15 es bumblebee"{
+    assert.equals(bumblebee, camion.cosaConNivelDePeligrosidad(15))
+  }
+
+  test "superan el niuvel de peligrosidad 10 bumblebee y bateria antiaerea "{
+    const superan= [bumblebee, bateriaAntiaerea]
+    assert.equals(superan, camion.cosasQueSuperanNivelDePeligro(10))
+  }
+
+  test "el nivel de peligro de bateria antiaerea es 100, entonces no hay cosas que lo superan"{
+    const superan= []
+    assert.equals(superan, camion.cosasQueSuperarNivelDePeligroDe(bateriaAntiaerea))
+  }
+
+  test "el peso total del camion es de 2410, por lo tanto no esta excedido"{
+    assert.notThat(camion.estaExcedidoDePeso())
+  }
+
+  test "el camion no puede cirular en la ruta, ya que el nivel de peligro del viaje es de 50 y algunas cosas lo superan "{
+    assert.notThat(camion.puedeCircularEnRuta(50))
+  }
 }
