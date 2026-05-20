@@ -47,4 +47,18 @@ object camion {
         cosas.all({c=> c.nivelDePeligrosisad() < unNivel})
         //self.cosasQueSuperanNivelDePeligro(unNivel).isEmpty()
     }
+
+//--------------------agregados
+
+// hay algun valor entre minimo y maximo
+    method hayCosaDePesoEntre (unMinimo, unMaximo) {
+        return cosas.any({c=> c.peso().between(unMinimo, unMaximo)}) 
+    }
+//-----------------
+    method pesosDeLasCosas(){
+        return cosas.map({c=> c.peso()})
+    }
+    method cosaMasPesada(){
+        return self.pesosDeLasCosas().max()
+    }
 }
