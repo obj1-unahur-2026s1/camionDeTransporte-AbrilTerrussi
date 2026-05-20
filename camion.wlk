@@ -61,4 +61,5 @@ object camion {
     method cosaMasPesada(){
         return self.pesosDeLasCosas().max()
     }
+
 }

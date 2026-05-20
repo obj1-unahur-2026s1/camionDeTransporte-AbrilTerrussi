@@ -5,8 +5,9 @@ describe "group of test for camion" {
   method initialize(){
     bumblebee.cambiarTransformacion(robot)
     camion.cargarCosas(bumblebee) //800
-    arenaAGranel.pesoNuevo(150) //150
+    arenaAGranel.sumarPeso(150) //150
     camion.cargarCosas(arenaAGranel)
+    bateriaAntiaerea.cargarMisiles()
     camion.cargarCosas(bateriaAntiaerea) //300
     paqueteDeLadrillos.sumarLadrillos(80) //160
     embalajeDeSeguridad.cambiarCosaEnvuelta(paqueteDeLadrillos)

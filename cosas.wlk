@@ -3,6 +3,11 @@ object knightRider {
     method peso() = 500
     method nivelDePeligrosidad() = 10
     
+    method ocupaBulto() = 1
+
+    method consecuenciaDeCarga(){
+
+    }
 }
 
 object bumblebee {
@@ -13,6 +18,12 @@ object bumblebee {
 
     method cambiarTransformacion(unaTransformacion){
         estaTranformado = unaTransformacion
+    }
+
+    method ocupaBulto() = 2
+
+    method consecuenciaDeCarga(){
+        self.cambiarTransformacion(robot)
     }
 }
 //---- objetos para boomblebee
@@ -42,23 +53,46 @@ object paqueteDeLadrillos {
     method quitarLadrillos(unaCantidad){
         cantidadDeLadrillos = cantidadDeLadrillos - unaCantidad
     }
+
+    method ocupaBulto(){
+        if(cantidadDeLadrillos == 100){
+            return 1
+        }else if(cantidadDeLadrillos.between(101, 300)){
+            return 2
+        }else{
+            return 3
+        }
+    }
+
+    method consecuenciaDeCarga(){
+        self.sumarLadrillos(12)
+    }
+
 }
 
 object arenaAGranel {
     var peso = 0
 
-    method pesoNuevo(unPeso){
-        peso = unPeso
-    } 
+    method sumarPeso(unPeso){
+        peso = peso + unPeso
+    }
+
+    method restarPeso(unPeso){
+        peso = peso - unPeso
+    }
 
     method peso() = peso
 
     method nivelDePeligrosidad() = 1
+    method ocupaBulto() = 1
 
+    method consecuenciaDeCarga(){
+        self.restarPeso(10)
+    }
 }
 
 object bateriaAntiaerea {
-    var estaConMisiles = true
+    var estaConMisiles = false
 
     method peso() = self.pesoSegunMisiles()
     method nivelDePeligrosidad() = self.nivelDePeligrosidadSegunMisil()
@@ -71,6 +105,10 @@ object bateriaAntiaerea {
         }
     }
 
+    method cargarMisiles(){
+        estaConMisiles = true
+    }
+
     method sacarMisiles(){
         estaConMisiles = false
     }
@@ -81,6 +119,18 @@ object bateriaAntiaerea {
         }else{
             return 0
         }
+    }
+
+    method ocupaBulto() {
+        if (estaConMisiles){
+            return 2
+        }else {
+            return 1
+        }
+    }
+
+    method consecuenciaDeCarga(){
+        self.cargarMisiles()
     }
 }
 
@@ -111,6 +161,17 @@ object conetendorPortuario {
             return 0
         }
     }
+
+    method bultosDentro(){
+        return cosasDentro.sum({c=> c.ocupaBulto()})
+    }
+    method ocupaBulto(){
+        return 1 + self.bultosDentro()
+    }
+
+    method consecuenciaDeCarga(){
+        cosasDentro.forEach({c=> c.consecuenciaDeCarga()})
+    }
 }
 
 object residuosRadioactivos {
@@ -119,8 +180,18 @@ object residuosRadioactivos {
     method nivelDePeligrosidad() = 200
     method peso() = peso
 
-    method nuevoPeso(unPeso){
-        peso = unPeso
+    method sumarPeso(unPeso){
+        peso = peso + unPeso
+    }
+
+    method restarPeso(unPeso){
+        peso = peso - unPeso
+    }
+
+    method ocupaBulto() = 1
+
+    method consecuenciaDeCarga(){
+        self.sumarPeso(15)
     }
 }
 
@@ -134,4 +205,9 @@ object embalajeDeSeguridad {
     }
 
     method nivelDePeligrosidad() = cosaDentro.nivelDePeligrosidad() / 2
+    method ocupaBulto() = 2
+
+    method consecuenciaDeCarga(){
+        
+    }
 }
